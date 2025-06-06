@@ -91,6 +91,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[200],
@@ -140,7 +143,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: 20),
-            Card(
+            if (!isKeyboard) Card(
               color: Colors.lightBlue[200],
               child: Padding(
                 padding: EdgeInsets.all(7),
