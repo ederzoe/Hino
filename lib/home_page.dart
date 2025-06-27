@@ -65,6 +65,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _selecionarNumero(String valor) {
+    print(valor);
     if (_numeroSelecionado.isEmpty && valor == '0') return;
 
     if (_numeroSelecionado.length < 3) {
@@ -91,8 +92,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+    final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -132,261 +132,262 @@ final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
                   decoration: InputDecoration(
                       labelText: 'Pesquisa por título ou verso',
                       suffixIcon: _usernameController.text.isNotEmpty
-                    ? IconButton(
-                        onPressed: () {
-                          _usernameController.clear();
-                          setState(() {});
-                        },
-                        icon: Icon(Icons.cancel, color: Colors.grey))
-                    : null),
+                          ? IconButton(
+                              onPressed: () {
+                                _usernameController.clear();
+                                setState(() {});
+                              },
+                              icon: Icon(Icons.cancel, color: Colors.grey))
+                          : null),
                 ),
               ),
             ),
             SizedBox(height: 20),
-            if (!isKeyboard) Card(
-              color: Colors.lightBlue[200],
-              child: Padding(
-                padding: EdgeInsets.all(7),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          _letraSelecionada,
-                          style: Theme.of(context).textTheme.displayMedium,
-                        ),
-                        Text(
-                          _numeroSelecionado,
-                          style: Theme.of(context).textTheme.displayMedium,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+            if (!isKeyboard)
+              Card(
+                color: Colors.lightBlue[200],
+                child: Padding(
+                  padding: EdgeInsets.all(7),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            _letraSelecionada,
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
+                          Text(
+                            _numeroSelecionado,
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarLetra('H');
+                            },
+                            child: const Text('H'),
                           ),
-                          onPressed: () {
-                            _selecionarLetra('H');
-                          },
-                          child: const Text('H'),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarLetra('C');
+                            },
+                            child: const Text('C'),
                           ),
-                          onPressed: () {
-                            _selecionarLetra('C');
-                          },
-                          child: const Text('C'),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarLetra('S');
+                            },
+                            child: const Text('S'),
                           ),
-                          onPressed: () {
-                            _selecionarLetra('S');
-                          },
-                          child: const Text('S'),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarNumero('1');
+                            },
+                            child: const Text('1'),
                           ),
-                          onPressed: () {
-                            _selecionarNumero('1');
-                          },
-                          child: const Text('1'),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarNumero('2');
+                            },
+                            child: const Text('2'),
                           ),
-                          onPressed: () {
-                            _selecionarNumero('2');
-                          },
-                          child: const Text('2'),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarNumero('3');
+                            },
+                            child: const Text('3'),
                           ),
-                          onPressed: () {
-                            _selecionarNumero('3');
-                          },
-                          child: const Text('3'),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarNumero('4');
+                            },
+                            child: const Text('4'),
                           ),
-                          onPressed: () {
-                            _selecionarNumero('4');
-                          },
-                          child: const Text('4'),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarNumero('5');
+                            },
+                            child: const Text('5'),
                           ),
-                          onPressed: () {
-                            _selecionarNumero('5');
-                          },
-                          child: const Text('5'),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarNumero('6');
+                            },
+                            child: const Text('6'),
                           ),
-                          onPressed: () {
-                            _selecionarNumero('6');
-                          },
-                          child: const Text('6'),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarNumero('7');
+                            },
+                            child: const Text('7'),
                           ),
-                          onPressed: () {
-                            _selecionarNumero('7');
-                          },
-                          child: const Text('7'),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarNumero('8');
+                            },
+                            child: const Text('8'),
                           ),
-                          onPressed: () {
-                            _selecionarNumero('8');
-                          },
-                          child: const Text('8'),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarNumero('9');
+                            },
+                            child: const Text('9'),
                           ),
-                          onPressed: () {
-                            _selecionarNumero('9');
-                          },
-                          child: const Text('9'),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarNumero('0');
+                            },
+                            child: const Text(''),
                           ),
-                          onPressed: () {
-                            _selecionarNumero('0');
-                          },
-                          child: const Text(''),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _selecionarNumero('0');
+                            },
+                            child: const Text('0'),
                           ),
-                          onPressed: () {
-                            _selecionarNumero('0');
-                          },
-                          child: const Text('0'),
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              _backspace();
+                            },
+                            child: const Icon(Icons.backspace),
                           ),
-                          onPressed: () {
-                            _backspace();
-                          },
-                          child: const Icon(Icons.backspace),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
