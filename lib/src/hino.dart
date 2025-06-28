@@ -51,7 +51,7 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>> searchById(String id) async {
     Database db = await instance.database;
  
-    return await db.rawQuery('SELECT Id, Titulo FROM Hino where Id=?', [id]);
+    return await db.rawQuery('select Hino.Id, Verso.IdHino, Hino.Titulo, Verso.Coro, Verso.Ordem, Verso.Texto, Verso.Estrofe from Hino inner join Verso on Verso.IdHino = Hino.Id where Hino.Id=? ORDER BY Verso.Estrofe, Verso.Ordem LIMIT 1', [id]);
   }
 
   Future<List<Map<String, dynamic>>> searchByText(String valor) async {

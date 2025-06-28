@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> {
           await dbHelper.searchByText(_usernameController.text);
       setState(() {
         _hinos = items3;
+        print(items3);
       });
     }
   }
@@ -99,12 +100,13 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.lightBlue[200],
         title: Text('Hinos'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: Align(
+        //padding: const EdgeInsets.all(16.0),
+        alignment: FractionalOffset.bottomCenter,
         child: Column(
           children: [
             _hinos.isEmpty
-                ? Text('')
+                ? Expanded(child: Text(""))
                 : Expanded(
                     child: ListView.builder(
                       itemCount: _hinos.length,
@@ -112,7 +114,8 @@ class _HomePageState extends State<HomePage> {
                         return Card(
                           child: ListTile(
                             onTap: () => exibir(_hinos[index]['Id']),
-                            title: Text(_hinos[index]['Titulo']),
+                            title: Text(_hinos[index]['Id'] + ' ' + _hinos[index]['Titulo']),
+                            subtitle: Text(_hinos[index]['Texto']),
                             trailing: Icon(Icons.arrow_forward),
                           ),
                         );
@@ -121,9 +124,8 @@ class _HomePageState extends State<HomePage> {
                   ),
             SizedBox(height: 20),
             Card(
-              color: Colors.lightBlue[200],
               child: Padding(
-                padding: EdgeInsets.all(7),
+                padding: EdgeInsets.all(12),
                 child: TextField(
                   controller: _usernameController,
                   onChanged: (text) {
@@ -145,9 +147,8 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 20),
             if (!isKeyboard)
               Card(
-                color: Colors.lightBlue[200],
                 child: Padding(
-                  padding: EdgeInsets.all(7),
+                  padding: EdgeInsets.all(12),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
