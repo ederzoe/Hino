@@ -64,7 +64,7 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>> getVersos(String id) async {
     Database db = await instance.database;
     return await db.rawQuery(
-        'select Verso.IdHino, Hino.Titulo, Verso.Coro, Verso.Ordem, Verso.Texto from Hino inner join Verso on Verso.IdHino = Hino.Id where Hino.Id=? ORDER BY Verso.Estrofe, Verso.Ordem LIMIT 12',
+        'select Verso.IdHino, Hino.Titulo, Verso.Coro, Verso.Ordem, Verso.Texto, Verso.Estrofe from Hino inner join Verso on Verso.IdHino = Hino.Id where Hino.Id=? ORDER BY Verso.Estrofe, Verso.Ordem',
         [id]);
   }
 }

@@ -1,5 +1,17 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_sqlite/src/hino.dart';
+
+class VersoModel extends Object {
+  String? idHino;
+  String? texto;
+  int? estrofe;
+  int? ordem;
+  int? coro;
+
+  VersoModel({this.idHino, this.texto, this.estrofe, this.ordem, this.coro});
+}
 
 class HinoPage extends StatefulWidget {
   final String? args;
@@ -12,7 +24,7 @@ class HinoPage extends StatefulWidget {
 class _HinoPageState extends State<HinoPage> {
   final dbHelper = DatabaseHelper.instance;
   String _appBarTitle = 'Título Inicial';
-  List<Map<String, dynamic>> _versos = [];
+  Map<int, List<Map<String, dynamic>>> agrupado = {};
 
   @override
   void initState() {
@@ -27,7 +39,11 @@ class _HinoPageState extends State<HinoPage> {
       setState(() {
         _appBarTitle =
             versos[0]['IdHino'] + ' ' + versos[0]['Titulo'] ?? 'Carregando...';
-        _versos = versos;
+
+        for (var item in versos) {
+          final estrofe = item['Estrofe'] as int;
+          agrupado.putIfAbsent(estrofe, () => []).add(item);
+        }
       });
     }
   }
@@ -39,20 +55,33 @@ class _HinoPageState extends State<HinoPage> {
           title: Text(_appBarTitle),
         ),
         body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(children: [
-              _versos.isEmpty
-                  ? Text('')
-                  : Expanded(
-                      child: ListView.builder(
-                        itemCount: _versos.length,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(children: [
+            agrupado.isEmpty
+                ? Text('')
+                : Expanded(
+                    child: ListView.builder(
+                        itemCount: agrupado.length,
                         itemBuilder: (context, index) {
-                          return Card(
-                            child: Text(_versos[index]['Texto']),
-                          );
-                        },
-                      ),
-                    ),
-            ])));
+                          final values = agrupado.values.elementAt(index);
+                          final coro = values.first['Coro'] == 1;
+                          return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(""),
+                                for (var item in values)
+                                  Text(
+                                    "${item['Texto']}",
+                                    style: TextStyle(
+                                        fontWeight: coro
+                                            ? FontWeight.bold
+                                            : FontWeight.normal),
+                                    textAlign: TextAlign.left,
+                                  ),
+                              ]);
+                        }),
+                  )
+          ]),
+        ));
   }
 }
