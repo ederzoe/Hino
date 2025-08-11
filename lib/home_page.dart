@@ -3,11 +3,13 @@ import 'package:flutter_application_sqlite/src/hino.dart';
 import 'package:flutter_application_sqlite/hino_page.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   final dbHelper = DatabaseHelper.instance;
   final _usernameController = TextEditingController();
 
@@ -34,21 +36,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> buscaPorNome(String texto) async {
-    print(texto);
     if (texto.isNotEmpty && texto.length > 3) {
       final List<Map<String, dynamic>> items3 =
           await dbHelper.searchByText(_usernameController.text);
       setState(() {
         _hinos = items3;
-        print(items3);
       });
     }
   }
 
   void carregarHino(String id) async {
-    final List<Map<String, dynamic>> items2 = await dbHelper.searchById(id);
-    print(items2);
-
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -66,7 +63,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _selecionarNumero(String valor) {
-    print(valor);
     if (_numeroSelecionado.isEmpty && valor == '0') return;
 
     if (_numeroSelecionado.length < 3) {
