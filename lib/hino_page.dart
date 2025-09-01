@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_sqlite/src/hino.dart';
+import 'package:hinos/src/hino.dart';
 
 class VersoModel extends Object {
   String? idHino;
@@ -24,6 +24,7 @@ class _HinoPageState extends State<HinoPage> {
   String _appBarTitle = 'Título Inicial';
   String idHinoHinoAtual = '';
   bool ehUltimoHino = false;
+  bool _isWidgetVisible = true;
   Map<int, List<Map<String, dynamic>>> agrupado = {};
 
   @override
@@ -76,8 +77,11 @@ class _HinoPageState extends State<HinoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 13, 45, 77),
+        foregroundColor: Colors.white,
         title: Text(_appBarTitle),
       ),
+      backgroundColor: Color.fromARGB(255, 13, 45, 77),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(children: [
@@ -86,7 +90,8 @@ class _HinoPageState extends State<HinoPage> {
               : Expanded(
                   child: GestureDetector(
                   onTap: () {
-                    // todo
+                    _isWidgetVisible = !_isWidgetVisible;
+                    setState(() {});
                   },
                   child: ListView.builder(
                       itemCount: agrupado.length,
@@ -109,42 +114,46 @@ class _HinoPageState extends State<HinoPage> {
                             ]);
                       }),
                 )),
-          Stack(
-            children: <Widget>[
-              Align(
-                  alignment: Alignment.bottomLeft,
-                  child: FloatingActionButton(
-                    heroTag: null,
-                    onPressed: () {
-                      retrocederHino();
-                    },
-                    backgroundColor: Colors.white,
-                    child: const Icon(Icons.navigate_before),
-                  )),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: FloatingActionButton(
-                    heroTag: null,
-                    onPressed: () {
-                      setState(() {
-                        // todo
-                      });
-                    },
-                    backgroundColor: Colors.white,
-                    child: const Icon(Icons.settings),
-                  )),
-              Align(
-                  alignment: Alignment.bottomRight,
-                  child: FloatingActionButton(
-                    heroTag: null,
-                    onPressed: () {
-                      avancarHino();
-                    },
-                    backgroundColor: Colors.white,
-                    child: const Icon(Icons.navigate_next),
-                  )),
-            ],
-          )
+          Visibility(
+              visible: _isWidgetVisible,
+              child: new Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: Stack(
+                    children: <Widget>[
+                      Align(
+                          alignment: Alignment.bottomLeft,
+                          child: FloatingActionButton(
+                            heroTag: null,
+                            onPressed: () {
+                              retrocederHino();
+                            },
+                            backgroundColor: Colors.white,
+                            child: const Icon(Icons.navigate_before),
+                          )),
+                      Align(
+                          alignment: Alignment.bottomCenter,
+                          child: FloatingActionButton(
+                            heroTag: null,
+                            onPressed: () {
+                              setState(() {
+                                // todo
+                              });
+                            },
+                            backgroundColor: Colors.white,
+                            child: const Icon(Icons.settings),
+                          )),
+                      Align(
+                          alignment: Alignment.bottomRight,
+                          child: FloatingActionButton(
+                            heroTag: null,
+                            onPressed: () {
+                              avancarHino();
+                            },
+                            backgroundColor: Colors.white,
+                            child: const Icon(Icons.navigate_next),
+                          )),
+                    ],
+                  )))
         ]),
       ),
     );

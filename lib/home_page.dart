@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_sqlite/src/hino.dart';
-import 'package:flutter_application_sqlite/hino_page.dart';
+import 'package:hinos/src/hino.dart';
+import 'package:hinos/hino_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -93,9 +93,11 @@ class HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue[200],
+        backgroundColor: Color.fromARGB(255, 13, 45, 77),
+        foregroundColor: Colors.white,
         title: Text('Hinos'),
       ),
+      backgroundColor: Color.fromARGB(255, 13, 45, 77),
       body: Align(
         //padding: const EdgeInsets.all(16.0),
         alignment: FractionalOffset.bottomCenter,
@@ -110,9 +112,11 @@ class HomePageState extends State<HomePage> {
                         return Card(
                           child: ListTile(
                             onTap: () => exibir(_hinos[index]['Id']),
-                            title: Text(_hinos[index]['Id'] + ' ' + _hinos[index]['Titulo']),
-                            subtitle: Text(_hinos[index]['Texto']),
-                            trailing: Icon(Icons.arrow_forward),
+                            title: Text(_hinos[index]['Id'] +
+                                ' ' +
+                                _hinos[index]['Titulo'],  overflow: TextOverflow.ellipsis, maxLines: 1),
+                            subtitle: Text(_hinos[index]['Texto'],  overflow: TextOverflow.ellipsis, maxLines: 1,style: TextStyle(fontSize: 14),),
+                            trailing: Icon(Icons.arrow_forward, size: 42),
                           ),
                         );
                       },
@@ -151,13 +155,15 @@ class HomePageState extends State<HomePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text(
-                            _letraSelecionada,
-                            style: Theme.of(context).textTheme.displayMedium,
-                          ),
-                          Text(
-                            _numeroSelecionado,
-                            style: Theme.of(context).textTheme.displayMedium,
+                          Text(_letraSelecionada,
+                              style: Theme.of(context).textTheme.displayMedium),
+                          Text(_numeroSelecionado,
+                              style: Theme.of(context).textTheme.displayMedium),
+                          TextButton(
+                            onPressed: () {
+                              _backspace();
+                            },
+                            child: const Icon(Icons.backspace, size: 42, color: Colors.grey),
                           ),
                         ],
                       ),
@@ -165,39 +171,18 @@ class HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarLetra('H');
                             },
                             child: const Text('H'),
                           ),
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarLetra('C');
                             },
                             child: const Text('C'),
                           ),
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarLetra('S');
                             },
@@ -209,39 +194,18 @@ class HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarNumero('1');
                             },
                             child: const Text('1'),
                           ),
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarNumero('2');
                             },
                             child: const Text('2'),
                           ),
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarNumero('3');
                             },
@@ -253,39 +217,18 @@ class HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarNumero('4');
                             },
                             child: const Text('4'),
                           ),
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarNumero('5');
                             },
                             child: const Text('5'),
                           ),
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarNumero('6');
                             },
@@ -297,39 +240,18 @@ class HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarNumero('7');
                             },
                             child: const Text('7'),
                           ),
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarNumero('8');
                             },
                             child: const Text('8'),
                           ),
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarNumero('9');
                             },
@@ -341,46 +263,14 @@ class HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
-                            onPressed: () {
-                              _selecionarNumero('0');
-                            },
-                            child: const Text(''),
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
                             onPressed: () {
                               _selecionarNumero('0');
                             },
                             child: const Text('0'),
                           ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
-                                ),
-                              ),
-                            ),
-                            onPressed: () {
-                              _backspace();
-                            },
-                            child: const Icon(Icons.backspace),
-                          ),
                         ],
                       ),
+                      Padding(padding: const EdgeInsets.only(bottom: 40))
                     ],
                   ),
                 ),
