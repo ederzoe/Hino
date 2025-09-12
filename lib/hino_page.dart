@@ -116,7 +116,7 @@ class _HinoPageState extends State<HinoPage> {
                 )),
           Visibility(
               visible: _isWidgetVisible,
-              child: new Padding(
+              child: Padding(
                   padding: const EdgeInsets.only(bottom: 40),
                   child: Stack(
                     children: <Widget>[
