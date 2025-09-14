@@ -8,6 +8,10 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  final double fontSizeSmall = 24.0;
+  final double fontSizeMedium = 42.0;
+  final double fontSizeLarge = 70.0;
+
   @override
   Widget build(BuildContext context) {
     double fonteTamanho = 17.2;
@@ -16,9 +20,12 @@ class MyApp extends StatelessWidget {
       title: "Hinos",
       theme: ThemeData(
         textTheme: TextTheme(
-          displaySmall: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-          displayMedium: TextStyle(fontSize: 42.0, fontWeight: FontWeight.bold),
-          displayLarge: TextStyle(fontSize: 70.0, fontWeight: FontWeight.bold),
+          displaySmall:
+              TextStyle(fontSize: fontSizeSmall, fontWeight: FontWeight.bold),
+          displayMedium:
+              TextStyle(fontSize: fontSizeMedium, fontWeight: FontWeight.bold),
+          displayLarge:
+              TextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.bold),
           headlineMedium: TextStyle(
               fontSize: 34.0, fontStyle: FontStyle.italic, color: Colors.white),
           bodyMedium: TextStyle(
