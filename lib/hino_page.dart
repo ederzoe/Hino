@@ -21,6 +21,7 @@ class HinoPage extends StatefulWidget {
 
 class _HinoPageState extends State<HinoPage> {
   final dbHelper = DatabaseHelper.instance;
+  double fonteTamanho = 24.0;
   String _appBarTitle = 'Título Inicial';
   String idHinoHinoAtual = '';
   bool ehUltimoHino = false;
@@ -53,6 +54,16 @@ class _HinoPageState extends State<HinoPage> {
         carregarHino(idHinoHinoAtual);
       }
     }
+  }
+
+  void mudarTamanhoFonte(bool aumentar) {
+    if (aumentar) {
+      fonteTamanho++;
+    } else {
+      fonteTamanho--;
+    }
+
+    setState(() {});
   }
 
   void carregarHino(String id) async {
@@ -108,12 +119,80 @@ class _HinoPageState extends State<HinoPage> {
                                   style: TextStyle(
                                       fontWeight: coro
                                           ? FontWeight.bold
-                                          : FontWeight.normal),
+                                          : FontWeight.normal,
+                                      fontSize: fonteTamanho),
                                   textAlign: TextAlign.left,
                                 ),
                             ]);
                       }),
                 )),
+          Visibility(
+              visible: _isWidgetVisible,
+              child: Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: Stack(
+                    children: <Widget>[
+                      Align(
+                          alignment: Alignment.bottomLeft,
+                          child: FloatingActionButton(
+                              heroTag: null,
+                              onPressed: () {
+                                mudarTamanhoFonte(false);
+                              },
+                              backgroundColor: Colors.white,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'A',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    '-',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ))),
+                      Align(
+                          alignment: Alignment.bottomRight,
+                          child: FloatingActionButton(
+                            heroTag: null,
+                            onPressed: () {
+                              mudarTamanhoFonte(true);
+                            },
+                            backgroundColor: Colors.white,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'A',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  '+',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                    ],
+                  ))),
           Visibility(
               visible: _isWidgetVisible,
               child: Padding(
