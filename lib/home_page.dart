@@ -112,10 +112,18 @@ class HomePageState extends State<HomePage> {
                         return Card(
                           child: ListTile(
                             onTap: () => exibir(_hinos[index]['Id']),
-                            title: Text(_hinos[index]['Id'] +
-                                ' ' +
-                                _hinos[index]['Titulo'],  overflow: TextOverflow.ellipsis, maxLines: 1),
-                            subtitle: Text(_hinos[index]['Texto'],  overflow: TextOverflow.ellipsis, maxLines: 1,style: TextStyle(fontSize: 14),),
+                            title: Text(
+                                _hinos[index]['Id'] +
+                                    ' ' +
+                                    _hinos[index]['Titulo'],
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1),
+                            subtitle: Text(
+                              _hinos[index]['Texto'],
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(fontSize: 14),
+                            ),
                             trailing: Icon(Icons.arrow_forward, size: 42),
                           ),
                         );
@@ -163,7 +171,8 @@ class HomePageState extends State<HomePage> {
                             onPressed: () {
                               _backspace();
                             },
-                            child: const Icon(Icons.backspace, size: 42, color: Colors.grey),
+                            child: const Icon(Icons.backspace,
+                                size: 42, color: Colors.grey),
                           ),
                         ],
                       ),
