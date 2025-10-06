@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hinos/src/hino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'color_picker_dialog.dart';
 
 class VersoModel extends Object {
   String? idHino;
@@ -22,31 +23,39 @@ class HinoPage extends StatefulWidget {
 
 class _HinoPageState extends State<HinoPage> {
   final dbHelper = DatabaseHelper.instance;
-  double fonteTamanho = 24.0;
-  String _appBarTitle = 'Título Inicial';
-  String idHinoHinoAtual = '';
+  String appBarTitle = 'Título Inicial';
+  bool isWidgetVisible = true;
   bool ehUltimoHino = false;
-  bool _isWidgetVisible = true;
+  String idHinoHinoAtual = '';
+
+  double fonteTamanho = 24.0;
+  Color fonteCor = Colors.black;
+  Color fundoCor = Colors.white;
+
   Map<int, List<Map<String, dynamic>>> agrupado = {};
 
   @override
   void initState() {
     super.initState();
-    tamanhoFonteCarrega();
+    preferenciaCarrega();
     carregarHino(widget.args ?? '0');
   }
 
-  Future<void> tamanhoFonteCarrega() async {
+  Future<void> preferenciaCarrega() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       fonteTamanho = prefs.getDouble('fonteTamanho') ?? fonteTamanho;
     });
   }
 
-  Future<void> tamanhoFontePersiste() async {
+  Future<void> preferenciaPersiste(String nome, double valor) async {
     setState(() => fonteTamanho);
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setDouble('fonteTamanho', fonteTamanho); // Salva ao mudar
+    await prefs.setDouble(nome, fonteTamanho);
+  }
+
+  void tamanhoFontePersiste() {
+    preferenciaPersiste('fonteTamanho', fonteTamanho);
   }
 
   void avancarHino() {
@@ -87,7 +96,7 @@ class _HinoPageState extends State<HinoPage> {
     agrupado = {};
     if (versos.isNotEmpty) {
       setState(() {
-        _appBarTitle =
+        appBarTitle =
             versos[0]['IdHino'] + ' ' + versos[0]['Titulo'] ?? 'Carregando...';
 
         for (var item in versos) {
@@ -100,15 +109,32 @@ class _HinoPageState extends State<HinoPage> {
     }
   }
 
+  Future<void> _openColorPicker() async {
+    final color = await showDialog<Color>(
+      context: context,
+      builder: (context) => ColorPickerDialog(initialColor: fundoCor),
+    );
+
+    if (color != null) {
+      if (color == Color.fromARGB(255, 13, 45, 77)) {
+        fonteCor = Colors.white;
+      }
+
+      setState(() {
+        fundoCor = color;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //backgroundColor: Color.fromARGB(255, 13, 45, 77),
-        //foregroundColor: Colors.white,
-        title: Text(_appBarTitle),
+        backgroundColor: fundoCor,
+        foregroundColor: fonteCor,
+        title: Text(appBarTitle),
       ),
-      //backgroundColor: Color.fromARGB(255, 13, 45, 77),
+      backgroundColor: fundoCor,
       body: Padding(
         padding: const EdgeInsets.all(7.0),
         child: Column(children: [
@@ -117,7 +143,7 @@ class _HinoPageState extends State<HinoPage> {
               : Expanded(
                   child: GestureDetector(
                   onTap: () {
-                    _isWidgetVisible = !_isWidgetVisible;
+                    isWidgetVisible = !isWidgetVisible;
                     setState(() {});
                   },
                   child: ListView.builder(
@@ -136,7 +162,8 @@ class _HinoPageState extends State<HinoPage> {
                                       fontWeight: coro
                                           ? FontWeight.bold
                                           : FontWeight.normal,
-                                      fontSize: fonteTamanho),
+                                      fontSize: fonteTamanho,
+                                      color: fonteCor),
                                   textAlign: TextAlign.left,
                                 ),
                             ]);
@@ -145,48 +172,66 @@ class _HinoPageState extends State<HinoPage> {
         ]),
       ),
       floatingActionButton: Visibility(
-          visible: _isWidgetVisible,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          visible: isWidgetVisible,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              // Lado Esquerdo (2 botões)
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FloatingActionButton(
-                    heroTag: "btn1",
-                    onPressed: () {
-                      retrocederHino();
-                    },
-                    child: const Icon(Icons.navigate_before),
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        heroTag: "btn1",
+                        onPressed: () {
+                          retrocederHino();
+                        },
+                        child: const Icon(Icons.navigate_before, size: 42),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 12),
-                  FloatingActionButton(
-                    heroTag: "btn2",
-                    onPressed: () {
-                      mudarTamanhoFonte(false);
-                    },
-                    child: const Icon(Icons.zoom_out),
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        heroTag: "btn2",
+                        onPressed: () {
+                          mudarTamanhoFonte(false);
+                        },
+                        child: const Icon(Icons.zoom_out, size: 42),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              const SizedBox(width: 12),
-              // Lado Direito (2 botões)
-              Row(
-                children: [
-                  FloatingActionButton(
-                    heroTag: "btn3",
-                    onPressed: () {
-                      mudarTamanhoFonte(true);
-                    },
-                    child: const Icon(Icons.zoom_in),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FloatingActionButton(
+                        heroTag: "btn3",
+                        onPressed: _openColorPicker,
+                        child: const Icon(Icons.color_lens, size: 42),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 12),
-                  FloatingActionButton(
-                    heroTag: "btn4",
-                    onPressed: () {
-                      avancarHino();
-                    },
-                    child: const Icon(Icons.navigate_next),
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        heroTag: "btn4",
+                        onPressed: () {
+                          mudarTamanhoFonte(true);
+                        },
+                        child: const Icon(Icons.zoom_in, size: 42),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        heroTag: "btn5",
+                        onPressed: () {
+                          avancarHino();
+                        },
+                        child: const Icon(Icons.navigate_next, size: 42),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -50,15 +50,17 @@ class DatabaseHelper {
 
   Future<List<Map<String, dynamic>>> searchById(String id) async {
     Database db = await instance.database;
- 
-    return await db.rawQuery('select Hino.Id, Verso.IdHino, Hino.Titulo, Verso.Coro, Verso.Ordem, Verso.Texto, Verso.Estrofe from Hino inner join Verso on Verso.IdHino = Hino.Id where Hino.Id=? ORDER BY Verso.Estrofe, Verso.Ordem LIMIT 1', [id]);
+
+    return await db.rawQuery(
+        'select Hino.Id, Verso.IdHino, Hino.Titulo, Verso.Coro, Verso.Ordem, Verso.Texto, Verso.Estrofe from Hino inner join Verso on Verso.IdHino = Hino.Id where Hino.Id=? ORDER BY Verso.Estrofe, Verso.Ordem LIMIT 1',
+        [id]);
   }
 
   Future<List<Map<String, dynamic>>> searchByText(String valor) async {
     Database db = await instance.database;
     return await db.rawQuery(
-        "select Hino.Id, Verso.IdHino, Hino.Titulo, Verso.Coro, Verso.Ordem, Verso.Texto from Hino inner join Verso on Verso.IdHino = Hino.Id and Verso.Estrofe = 1 and Verso.Ordem = 1 where Hino.Titulo LIKE ? ORDER BY Verso.Estrofe, Verso.Ordem LIMIT 12",
-        ['%$valor%']);
+        "select Hino.Id, Verso.IdHino, Hino.Titulo, Verso.Coro, Verso.Ordem, Verso.Texto from Hino inner join Verso on Verso.IdHino = Hino.Id and Verso.Estrofe = 1 and Verso.Ordem = 1 where Hino.Titulo LIKE ? or Verso.Texto LIKE ? ORDER BY Verso.Estrofe, Verso.Ordem LIMIT 12",
+        ['%$valor%', '%$valor%']);
   }
 
   Future<List<Map<String, dynamic>>> getVersos(String id) async {
