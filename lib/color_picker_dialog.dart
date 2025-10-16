@@ -11,13 +11,11 @@ class ColorPickerDialog extends StatefulWidget {
 
 class _ColorPickerDialogState extends State<ColorPickerDialog> {
   final List<Color> colors = [
+    Color.fromARGB(255, 255, 255, 255),
+    Color.fromARGB(237, 239, 238, 238),
+    Color.fromARGB(254, 246, 235, 235),
+    Color.fromARGB(255, 36, 36, 36),
     Color.fromARGB(255, 13, 45, 77),
-    Colors.orange,
-    Colors.yellow,
-    Colors.green,
-    Colors.blue,
-    Colors.purple,
-    Colors.pink,
   ];
 
   Color? selectedColor;

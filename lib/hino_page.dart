@@ -116,8 +116,11 @@ class _HinoPageState extends State<HinoPage> {
     );
 
     if (color != null) {
-      if (color == Color.fromARGB(255, 13, 45, 77)) {
+      if (color == Color.fromARGB(255, 36, 36, 36) ||
+          color == Color.fromARGB(255, 13, 45, 77)) {
         fonteCor = Colors.white;
+      } else {
+        fonteCor = Colors.black;
       }
 
       setState(() {
