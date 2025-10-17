@@ -174,6 +174,7 @@ class _HinoPageState extends State<HinoPage> {
                 )),
         ]),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Visibility(
           visible: isWidgetVisible,
           child: Column(
@@ -181,6 +182,7 @@ class _HinoPageState extends State<HinoPage> {
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 10,
                 children: [
                   Column(
                     children: [
@@ -238,6 +240,7 @@ class _HinoPageState extends State<HinoPage> {
                   ),
                 ],
               ),
+              SizedBox(height: 20)
             ],
           )),
     );
