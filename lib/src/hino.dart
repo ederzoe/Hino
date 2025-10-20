@@ -8,9 +8,6 @@ import 'dart:io';
 
 class DatabaseHelper {
   static final _databaseName = "hinos.db";
-  static final table = 'hino';
-  static final columnId = 'id';
-  static final columnNome = 'titulo';
 
   // torna esta classe singleton
   DatabaseHelper._privateConstructor();
@@ -29,23 +26,22 @@ class DatabaseHelper {
     // Check if the database file exists
     final exists = await File(path).exists();
 
-    if (!kReleaseMode || !exists) {
-      // Copy from assets
-      ByteData data = await rootBundle.load('assets/db/$_databaseName');
-      List<int> bytes =
-          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-
-      // Write and flush the bytes written
-      await File(path).writeAsBytes(bytes, flush: true);
+    // Apaga o banco antigo, se existir
+    if (exists) {
+      await deleteDatabase(path);
+      print('Banco antigo excluído.');
     }
+
+    // Copy from assets
+    ByteData data = await rootBundle.load('assets/db/$_databaseName');
+    List<int> bytes =
+        data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+
+    // Write and flush the bytes written
+    await File(path).writeAsBytes(bytes, flush: true);
 
     // Open the database
     return await openDatabase(path);
-  }
-
-  Future<List<Map<String, dynamic>>> queryAllRows() async {
-    Database db = await instance.database;
-    return await db.query(table);
   }
 
   Future<List<Map<String, dynamic>>> searchById(String id) async {

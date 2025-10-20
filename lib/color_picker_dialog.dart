@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ColorPickerDialog extends StatefulWidget {
   final Color? initialColor;
@@ -13,8 +12,8 @@ class ColorPickerDialog extends StatefulWidget {
 class _ColorPickerDialogState extends State<ColorPickerDialog> {
   final List<Color> colors = [
     Color(0xFFFFFFFF),
-    Color(0xFFedefee),
-    Color(0xFFfef6eb),
+    Color(0xFFc9c3b1),
+    Color(0xFFde83d2),
     Color(0xFF1E2545),
     Color(0xFF151315),
   ];

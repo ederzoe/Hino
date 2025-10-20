@@ -37,7 +37,7 @@ class _HinoPageState extends State<HinoPage> {
       fonteTamanho = prefs.getDouble('fonteTamanho') ?? fonteTamanho;
 
       String fonteCorString = prefs.getString('fonteCor') ??
-          Colors.white.value.toRadixString(16).padLeft(8, '0');
+          Colors.black.value.toRadixString(16).padLeft(8, '0');
       fonteCor = Color(int.parse(fonteCorString, radix: 16));
 
       String fundoCorString = prefs.getString('fundoCor') ??
