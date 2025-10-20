@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hinos/src/hino.dart';
 import 'package:hinos/hino_page.dart';
+import 'package:hinos/lista_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class HomePageState extends State<HomePage> {
   String _letraSelecionada = 'H';
   String _numeroSelecionado = '';
 
-  Future<void> carregarLista() async {
+  Future<void> carregarPesquisa() async {
     final List<Map<String, dynamic>> items =
         await dbHelper.searchById(_letraSelecionada + _numeroSelecionado);
     setState(() {
@@ -54,12 +55,21 @@ class HomePageState extends State<HomePage> {
     );
   }
 
+  void carregarLista() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ListaPage(),
+      ),
+    );
+  }
+
   void _selecionarLetra(String valor) {
     setState(() {
       _letraSelecionada = valor;
     });
 
-    carregarLista();
+    carregarPesquisa();
   }
 
   void _selecionarNumero(String valor) {
@@ -71,7 +81,7 @@ class HomePageState extends State<HomePage> {
       });
     }
 
-    carregarLista();
+    carregarPesquisa();
   }
 
   void _backspace() {
@@ -83,7 +93,7 @@ class HomePageState extends State<HomePage> {
         );
       });
 
-      carregarLista();
+      carregarPesquisa();
     }
   }
 
@@ -93,13 +103,10 @@ class HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 13, 45, 77),
         foregroundColor: Colors.white,
         title: Text('Hinos'),
       ),
-      backgroundColor: Color.fromARGB(255, 13, 45, 77),
       body: Align(
-        //padding: const EdgeInsets.all(16.0),
         alignment: FractionalOffset.bottomCenter,
         child: Column(
           children: [
@@ -108,6 +115,7 @@ class HomePageState extends State<HomePage> {
                 : Expanded(
                     child: ListView.builder(
                       itemCount: _hinos.length,
+                      padding: EdgeInsets.all(4),
                       itemBuilder: (context, index) {
                         return Card(
                           child: ListTile(
@@ -122,9 +130,9 @@ class HomePageState extends State<HomePage> {
                               _hinos[index]['Texto'],
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              style: TextStyle(fontSize: 14),
+                              style: TextStyle(fontSize: 12),
                             ),
-                            trailing: Icon(Icons.arrow_forward, size: 42),
+                            trailing: Icon(Icons.arrow_forward, size: 32),
                           ),
                         );
                       },
@@ -161,7 +169,7 @@ class HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           Text(_letraSelecionada,
                               style: Theme.of(context).textTheme.displayMedium),
@@ -173,6 +181,23 @@ class HomePageState extends State<HomePage> {
                             },
                             child: const Icon(Icons.backspace,
                                 size: 42, color: Colors.grey),
+                          ),
+                          SizedBox(width: 40),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.grey,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10), // Padding
+                              textStyle: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              carregarLista();
+                            },
+                            child: const Text(
+                              'Exibir todos os hinos',
+                            ),
                           ),
                         ],
                       ),

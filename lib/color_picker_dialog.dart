@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ColorPickerDialog extends StatefulWidget {
   final Color? initialColor;
 
-  const ColorPickerDialog({Key? key, this.initialColor});
+  const ColorPickerDialog({Key? key, this.initialColor}) : super(key: key);
 
   @override
   State<ColorPickerDialog> createState() => _ColorPickerDialogState();
@@ -11,11 +12,11 @@ class ColorPickerDialog extends StatefulWidget {
 
 class _ColorPickerDialogState extends State<ColorPickerDialog> {
   final List<Color> colors = [
-    Color.fromARGB(255, 255, 255, 255),
-    Color.fromARGB(237, 239, 238, 238),
-    Color.fromARGB(254, 246, 235, 235),
-    Color.fromARGB(255, 36, 36, 36),
-    Color.fromARGB(255, 13, 45, 77),
+    Color(0xFFFFFFFF),
+    Color(0xFFedefee),
+    Color(0xFFfef6eb),
+    Color(0xFF1E2545),
+    Color(0xFF151315),
   ];
 
   Color? selectedColor;

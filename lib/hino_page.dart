@@ -3,16 +3,6 @@ import 'package:hinos/src/hino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'color_picker_dialog.dart';
 
-class VersoModel extends Object {
-  String? idHino;
-  String? texto;
-  int? estrofe;
-  int? ordem;
-  int? coro;
-
-  VersoModel({this.idHino, this.texto, this.estrofe, this.ordem, this.coro});
-}
-
 class HinoPage extends StatefulWidget {
   final String? args;
   const HinoPage({Key? key, this.args}) : super(key: key);
@@ -45,6 +35,14 @@ class _HinoPageState extends State<HinoPage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       fonteTamanho = prefs.getDouble('fonteTamanho') ?? fonteTamanho;
+
+      String fonteCorString = prefs.getString('fonteCor') ??
+          Colors.white.value.toRadixString(16).padLeft(8, '0');
+      fonteCor = Color(int.parse(fonteCorString, radix: 16));
+
+      String fundoCorString = prefs.getString('fundoCor') ??
+          Colors.white.value.toRadixString(16).padLeft(8, '0');
+      fundoCor = Color(int.parse(fundoCorString, radix: 16));
     });
   }
 
@@ -54,7 +52,19 @@ class _HinoPageState extends State<HinoPage> {
     await prefs.setDouble(nome, fonteTamanho);
   }
 
-  void tamanhoFontePersiste() {
+  Future<void> fundoCorPersiste(Color cor) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+        'fundoCor', cor.value.toRadixString(16).padLeft(8, '0'));
+  }
+
+  Future<void> fonteCorPersiste(Color cor) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+        'fonteCor', cor.value.toRadixString(16).padLeft(8, '0'));
+  }
+
+  void fonteTamanhoPersiste() {
     preferenciaPersiste('fonteTamanho', fonteTamanho);
   }
 
@@ -87,7 +97,7 @@ class _HinoPageState extends State<HinoPage> {
       fonteTamanho--;
     }
 
-    tamanhoFontePersiste();
+    fonteTamanhoPersiste();
     setState(() {});
   }
 
@@ -116,12 +126,14 @@ class _HinoPageState extends State<HinoPage> {
     );
 
     if (color != null) {
-      if (color == Color.fromARGB(255, 36, 36, 36) ||
-          color == Color.fromARGB(255, 13, 45, 77)) {
+      if (color == Color(0xFF151315) || color == Color(0xFF1E2545)) {
         fonteCor = Colors.white;
       } else {
         fonteCor = Colors.black;
       }
+
+      fundoCorPersiste(color);
+      fonteCorPersiste(fonteCor);
 
       setState(() {
         fundoCor = color;
