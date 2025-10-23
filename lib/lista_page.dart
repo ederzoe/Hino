@@ -68,6 +68,7 @@ class _ListaPageState extends State<ListaPage> {
           child: Column(
             children: [
               Card(
+                color: Colors.grey[200],
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -92,13 +93,13 @@ class _ListaPageState extends State<ListaPage> {
                       },
                       child: const Text('S'),
                     ),
-                    // TextButton(
-                    //   onPressed: () {
-                    //     _selecionarLetra('N');
-                    //     scrollController.jumpTo(0.0);
-                    //   },
-                    //   child: const Text('Novos'),
-                    // ),
+                    TextButton(
+                      onPressed: () {
+                        _selecionarLetra('N');
+                        scrollController.jumpTo(0.0);
+                      },
+                      child: const Text('Novos'),
+                    ),
                   ],
                 ),
               ),
@@ -108,24 +109,29 @@ class _ListaPageState extends State<ListaPage> {
                       child: ListView.builder(
                         controller: scrollController,
                         itemCount: _hinos.length,
-                        padding: EdgeInsets.all(4),
+                        padding: EdgeInsets.all(0),
                         itemBuilder: (context, index) {
                           return Card(
+                            margin: const EdgeInsets.all(2),
                             child: ListTile(
                               onTap: () => exibir(_hinos[index]['Id']),
                               title: Text(
-                                  _hinos[index]['Id'] +
-                                      ' ' +
-                                      _hinos[index]['Titulo'],
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1),
+                                (_hinos[index]['Id'].contains('N')
+                                        ? ''
+                                        : _hinos[index]['Id']) +
+                                    ' ' +
+                                    _hinos[index]['Titulo'],
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(fontSize: 14),
+                              ),
                               subtitle: Text(
                                 _hinos[index]['Texto'],
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: TextStyle(fontSize: 12),
                               ),
-                              trailing: Icon(Icons.arrow_forward, size: 32),
+                              trailing: Icon(Icons.arrow_forward, size: 24),
                             ),
                           );
                         },
