@@ -100,11 +100,9 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
-
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.white,
-        title: Text('Hinos'),
+        title: Text('Falando e Cantando Entre Vós'),
       ),
       body: Align(
         alignment: FractionalOffset.bottomCenter,
