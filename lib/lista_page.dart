@@ -112,7 +112,7 @@ class _ListaPageState extends State<ListaPage> {
                         padding: EdgeInsets.all(0),
                         itemBuilder: (context, index) {
                           return Card(
-                            margin: const EdgeInsets.all(2),
+                            margin: const EdgeInsets.all(3),
                             child: ListTile(
                               onTap: () => exibir(_hinos[index]['Id']),
                               title: Text(
