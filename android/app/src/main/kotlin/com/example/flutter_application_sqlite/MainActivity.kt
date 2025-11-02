@@ -1,4 +1,4 @@
-package com.example.flutter_application_sqlite
+package br.com.lereorar.hinos
 
 import io.flutter.embedding.android.FlutterActivity
 

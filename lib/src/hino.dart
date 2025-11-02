@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -29,7 +28,6 @@ class DatabaseHelper {
     // Apaga o banco antigo, se existir
     if (exists) {
       await deleteDatabase(path);
-      print('Banco antigo excluído.');
     }
 
     // Copy from assets
