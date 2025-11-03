@@ -119,7 +119,9 @@ class HomePageState extends State<HomePage> {
                           child: ListTile(
                             onTap: () => exibir(_hinos[index]['Id']),
                             title: Text(
-                                _hinos[index]['Id'] +
+                                (_hinos[index]['Id'].contains('N')
+                                        ? ''
+                                        : _hinos[index]['Id']) +
                                     ' ' +
                                     _hinos[index]['Titulo'],
                                 overflow: TextOverflow.ellipsis,

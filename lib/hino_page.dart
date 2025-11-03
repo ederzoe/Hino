@@ -107,7 +107,10 @@ class _HinoPageState extends State<HinoPage> {
     if (versos.isNotEmpty) {
       setState(() {
         appBarTitle =
-            versos[0]['IdHino'] + ' ' + versos[0]['Titulo'] ?? 'Carregando...';
+            (versos[0]['IdHino'].contains('N') ? '' : versos[0]['IdHino']) +
+                    ' ' +
+                    versos[0]['Titulo'] ??
+                'Carregando...';
 
         for (var item in versos) {
           final estrofe = item['Estrofe'] as int;
@@ -126,7 +129,9 @@ class _HinoPageState extends State<HinoPage> {
     );
 
     if (color != null) {
-      if (color == Color(0xFF151315) || color == Color(0xFF1E2545)) {
+      if (color == Color(0xFF151315) ||
+          color == Color(0xFF073f61) ||
+          color == Color(0xFF27373a)) {
         fonteCor = Colors.white;
       } else {
         fonteCor = Colors.black;

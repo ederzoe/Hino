@@ -13,9 +13,10 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   final List<Color> colors = [
     Color(0xFFFFFFFF),
     Color(0xFFc9c3b1),
-    Color(0xFFde83d2),
-    Color(0xFF1E2545),
+    Color(0xFF27373a),
+    Color(0xFF073f61),
     Color(0xFF151315),
+    Color(0xFFcf98c7),
   ];
 
   Color? selectedColor;
@@ -43,8 +44,8 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
-              width: isSelected ? 50 : 40,
-              height: isSelected ? 50 : 40,
+              width: isSelected ? 70 : 60,
+              height: isSelected ? 70 : 60,
               decoration: BoxDecoration(
                 color: color,
                 shape: BoxShape.circle,
