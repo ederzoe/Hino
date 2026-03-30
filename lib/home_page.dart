@@ -21,12 +21,12 @@ class HomePageState extends State<HomePage> {
   }
 
   List<Map<String, dynamic>> _hinos = [];
-  String _letraSelecionada = 'H';
+  String _letraSelecionada = '';
   String _numeroSelecionado = '';
 
   Future<void> carregarPesquisa() async {
     final List<Map<String, dynamic>> items =
-        await dbHelper.searchById(_letraSelecionada + _numeroSelecionado);
+        await dbHelper.searchById(_numeroSelecionado);
     setState(() {
       _hinos = items;
     });
@@ -37,7 +37,7 @@ class HomePageState extends State<HomePage> {
   }
 
   Future<void> buscaPorNome(String texto) async {
-    if (texto.isNotEmpty && texto.length > 3) {
+    if (texto.isNotEmpty && texto.length > 1) {
       final List<Map<String, dynamic>> items3 =
           await dbHelper.searchByText(_usernameController.text);
       setState(() {
@@ -198,29 +198,6 @@ class HomePageState extends State<HomePage> {
                             child: const Text(
                               'Exibir todos os hinos',
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              _selecionarLetra('H');
-                            },
-                            child: const Text('H'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              _selecionarLetra('C');
-                            },
-                            child: const Text('C'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              _selecionarLetra('S');
-                            },
-                            child: const Text('S'),
                           ),
                         ],
                       ),

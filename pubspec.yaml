@@ -1,7 +1,7 @@
 name: hinos
 description: "Falando e cantando entre vós."
 publish_to: 'none'
-version: 1.0.0
+version: 1.0.1+6
 
 environment:
   sdk: ^2.12.0
@@ -15,6 +15,7 @@ dependencies:
   path_provider: ^2.1.5
   collection: ^1.19.1
   shared_preferences: ^2.2.0
+  package_info_plus: ^8.0.0
 
 dev_dependencies:
   flutter_test:
