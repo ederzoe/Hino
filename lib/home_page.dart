@@ -64,14 +64,6 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  void _selecionarLetra(String valor) {
-    setState(() {
-      _letraSelecionada = valor;
-    });
-
-    carregarPesquisa();
-  }
-
   void _selecionarNumero(String valor) {
     if (_numeroSelecionado.isEmpty && valor == '0') return;
 
