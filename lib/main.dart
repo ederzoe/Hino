@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hinos/home_page.dart';
+import 'package:hinos/home_nova_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: HomeNovaPage(),
       title: "Hinos",
     );
   }

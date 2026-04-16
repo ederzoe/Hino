@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hinos/pdf_page.dart';
 import 'package:hinos/src/hino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'color_picker_dialog.dart';
@@ -122,6 +123,29 @@ class _HinoPageState extends State<HinoPage> {
     }
   }
 
+  void partituraHino(String id) async {
+    if (id.length == 3) {
+      id = id
+          .replaceAll('H', 'H0')
+          .replaceAll('C', 'C0')
+          .replaceAll('S', 'S0')
+          .replaceAll('N', 'N0');
+    } else if (id.length == 2) {
+      id = id
+          .replaceAll('H', 'H00')
+          .replaceAll('C', 'C00')
+          .replaceAll('S', 'S00')
+          .replaceAll('N', 'N00');
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PdfViewerWidget(args: id),
+      ),
+    );
+  }
+
   Future<void> _openColorPicker() async {
     final color = await showDialog<Color>(
       context: context,
@@ -230,6 +254,17 @@ class _HinoPageState extends State<HinoPage> {
                         heroTag: "btn3",
                         onPressed: _openColorPicker,
                         child: const Icon(Icons.color_lens, size: 42),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        heroTag: "btn6",
+                        onPressed: () {
+                          partituraHino(idHinoHinoAtual);
+                        },
+                        child: const Icon(Icons.music_note, size: 42),
                       ),
                     ],
                   ),
