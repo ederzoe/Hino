@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hinos/pdf_page.dart';
+import 'package:hinos/partitura_page.dart';
 import 'package:hinos/src/hino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'color_picker_dialog.dart';
@@ -141,7 +141,7 @@ class _HinoPageState extends State<HinoPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PdfViewerWidget(args: id),
+        builder: (context) => PartituraWidget(args: id),
       ),
     );
   }

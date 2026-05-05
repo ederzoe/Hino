@@ -5,17 +5,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 
-class PdfViewerWidget extends StatefulWidget {
+class PartituraWidget extends StatefulWidget {
   final String args;
 
-  const PdfViewerWidget({Key? key, required this.args}) : super(key: key);
+  const PartituraWidget({Key? key, required this.args}) : super(key: key);
 
   @override
-  _PdfViewerWidgetState createState() => _PdfViewerWidgetState();
+  _PartituraWidgetState createState() => _PartituraWidgetState();
 }
 
-class _PdfViewerWidgetState extends State<PdfViewerWidget> {
-  late PDFViewController _pdfController;
+class _PartituraWidgetState extends State<PartituraWidget> {
+  late PDFViewController _partituraController;
   String? filePath;
 
   @override
@@ -56,10 +56,10 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
               onPageChanged: (int? page, int? total) {
                 print('Page changed to $page of $total');
               },
-              onViewCreated: (PDFViewController pdfController) async {
-                _pdfController = pdfController;
+              onViewCreated: (PDFViewController partituraController) async {
+                _partituraController = partituraController;
 
-                final pages = await pdfController.getPageCount();
+                final pages = await partituraController.getPageCount();
 
                 print('Total pages: $pages');
               },

@@ -132,20 +132,20 @@ class HomeNovaPageState extends State<HomeNovaPage> {
   Widget _buildHinoList() {
     return ListView.builder(
       itemCount: _hinos.length,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 4),
       itemBuilder: (context, index) {
         final hino = _hinos[index];
         return Card(
           elevation: 0,
-          margin: const EdgeInsets.only(bottom: 8),
+          margin: const EdgeInsets.only(bottom: 2),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: ListTile(
             onTap: () => exibir(_hinos[index]['Id']),
             leading: CircleAvatar(
-              backgroundColor: const Color(0xFF1B3A4B),
+              backgroundColor: const Color.fromARGB(255, 8, 141, 212),
               child: Text(hino['Id'].toString(),
-                  style: const TextStyle(color: Colors.white, fontSize: 12)),
+                  style: const TextStyle(color: Colors.white, fontSize: 14)),
             ),
             title: Text(hino['Titulo'],
                 style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -197,7 +197,7 @@ class HomeNovaPageState extends State<HomeNovaPage> {
           ),
 
           if (!hideNumericPad) ...[
-            const SizedBox(height: 20),
+            const SizedBox(height: 12),
             // Display do Número Digitado
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -205,7 +205,7 @@ class HomeNovaPageState extends State<HomeNovaPage> {
                 Text(
                   _numeroSelecionado.isEmpty ? "000" : _numeroSelecionado,
                   style: TextStyle(
-                    fontSize: 42,
+                    fontSize: 33,
                     fontWeight: FontWeight.bold,
                     color: _numeroSelecionado.isEmpty
                         ? Colors.black12
@@ -222,14 +222,15 @@ class HomeNovaPageState extends State<HomeNovaPage> {
             const Divider(height: 30),
             // Teclado Numérico Estilizado
             _buildNumericKeyboard(),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             TextButton(
               onPressed: () {
                 carregarLista();
               }, //
               child: const Text("Ver todos os hinos",
                   style: TextStyle(
-                      color: Color(0xFFB59410), fontWeight: FontWeight.bold)),
+                      color: Color.fromARGB(255, 8, 141, 212),
+                      fontWeight: FontWeight.bold)),
             ),
           ],
         ],
@@ -247,7 +248,7 @@ class HomeNovaPageState extends State<HomeNovaPage> {
           ['0']
         ])
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
+            padding: const EdgeInsets.symmetric(vertical: 2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: row.map((val) => _buildKey(val)).toList(),
@@ -265,16 +266,16 @@ class HomeNovaPageState extends State<HomeNovaPage> {
         height: 55,
         width: MediaQuery.of(context).size.width * 0.25,
         decoration: BoxDecoration(
-          color: const Color(0xFFF7F5F0),
-          borderRadius: BorderRadius.circular(15),
+          color: const Color.fromARGB(255, 8, 141, 212),
+          borderRadius: BorderRadius.circular(14),
         ),
         alignment: Alignment.center,
         child: Text(
           label,
           style: const TextStyle(
-              fontSize: 22,
+              fontSize: 21,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1B3A4B)),
+              color: Color.fromARGB(255, 255, 255, 255)),
         ),
       ),
     );

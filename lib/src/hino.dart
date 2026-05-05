@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:diacritic/diacritic.dart';
 import 'dart:io';
 
 class DatabaseHelper {
@@ -51,8 +52,9 @@ class DatabaseHelper {
 
   Future<List<Map<String, dynamic>>> searchByText(String valor) async {
     Database db = await instance.database;
+    valor = normalizar(valor);
     return await db.rawQuery(
-        "select Hino.Id, Verso.IdHino, Hino.Titulo, Verso.Coro, Verso.Ordem, Verso.Texto from Hino inner join Verso on Verso.IdHino = Hino.Id and Verso.Estrofe = 1 and Verso.Ordem = 1 where Hino.Id = ? or Hino.Titulo LIKE ? or Verso.Texto LIKE ? ORDER BY Verso.Estrofe, Verso.Ordem LIMIT 12",
+        "select Hino.Id, Verso.IdHino, Hino.Titulo, Verso.Coro, Verso.Ordem, Verso.Texto from Hino inner join Verso on Verso.IdHino = Hino.Id and Verso.Estrofe = 1 and Verso.Ordem = 1 where Hino.Id = ? or Hino.TituloNormalizado LIKE ? or Verso.TextoNormalizado LIKE ? ORDER BY Verso.Estrofe, Verso.Ordem LIMIT 12",
         [valor, '%$valor%', '%$valor%']);
   }
 
@@ -68,5 +70,13 @@ class DatabaseHelper {
     return await db.rawQuery(
         'select Verso.IdHino, Hino.Titulo, Verso.Coro, Verso.Ordem, Verso.Texto, Verso.Estrofe from Hino inner join Verso on Verso.IdHino = Hino.Id where Hino.Id = ? ORDER BY Verso.Estrofe, Verso.Ordem',
         [id]);
+  }
+
+  String normalizar(String texto) {
+    return removeDiacritics(texto)
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^\w\s]'), '') // remove pontuação
+        .replaceAll(RegExp(r'\s+'), ' ') // remove espaços duplicados
+        .trim();
   }
 }
