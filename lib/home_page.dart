@@ -21,7 +21,7 @@ class HomePageState extends State<HomePage> {
   }
 
   List<Map<String, dynamic>> _hinos = [];
-  String _letraSelecionada = '';
+  final String _letraSelecionada = '';
   String _numeroSelecionado = '';
 
   Future<void> carregarPesquisa() async {
