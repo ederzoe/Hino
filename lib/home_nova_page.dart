@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hinos/src/hino.dart';
 import 'package:hinos/hino_page.dart';
 import 'package:hinos/lista_page.dart';
+import 'package:hinos/contato_page.dart';
 
 class HomeNovaPage extends StatefulWidget {
   const HomeNovaPage({Key? key}) : super(key: key);
@@ -84,20 +85,33 @@ class HomeNovaPageState extends State<HomeNovaPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final bool isKeyboardVisible =
         MediaQuery.of(context).viewInsets.bottom != 0;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F5F0), // Off-white moderno
       appBar: AppBar(
+        toolbarHeight: 48,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: const Text(
-          'Falando e Cantando Entre Vós',
-          style:
-              TextStyle(color: Color(0xFF1B3A4B), fontWeight: FontWeight.bold),
+        title: Text(
+          'HINOS',
+          style: TextStyle(
+              color: colorScheme.onSurface, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            tooltip: 'Fale Conosco',
+            icon: const Icon(Icons.support_agent, color: Colors.blueAccent),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ContatoPage()),
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -118,11 +132,14 @@ class HomeNovaPageState extends State<HomeNovaPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.music_note_outlined, size: 80, color: Colors.black12),
+          Icon(Icons.music_note_outlined,
+              size: 80, color: Theme.of(context).colorScheme.outlineVariant),
           const SizedBox(height: 16),
           Text(
             "Digite o número ou título do hino",
-            style: TextStyle(color: Colors.black38, fontSize: 16),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontSize: 16),
           ),
         ],
       ),
@@ -143,7 +160,7 @@ class HomeNovaPageState extends State<HomeNovaPage> {
           child: ListTile(
             onTap: () => exibir(_hinos[index]['Id']),
             leading: CircleAvatar(
-              backgroundColor: const Color.fromARGB(255, 8, 141, 212),
+              backgroundColor: Theme.of(context).colorScheme.primary,
               child: Text(hino['Id'].toString(),
                   style: const TextStyle(color: Colors.white, fontSize: 14)),
             ),
@@ -151,7 +168,8 @@ class HomeNovaPageState extends State<HomeNovaPage> {
                 style: const TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(hino['Texto'],
                 maxLines: 1, overflow: TextOverflow.ellipsis),
-            trailing: const Icon(Icons.chevron_right, color: Colors.black26),
+            trailing: Icon(Icons.chevron_right,
+                color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
         );
       },
@@ -159,81 +177,95 @@ class HomeNovaPageState extends State<HomeNovaPage> {
   }
 
   Widget _buildBottomPanel(bool hideNumericPad) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 20)
-        ],
-      ),
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Campo de Texto Moderno
-          TextField(
-            controller: _searchController,
-            onChanged: _buscaPorNome,
-            decoration: InputDecoration(
-              hintText: 'Pesquisa por título ou verso',
-              filled: true,
-              fillColor: const Color(0xFFF2F2F2),
-              prefixIcon: const Icon(Icons.search, color: Color(0xFF1B3A4B)),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: BorderSide.none,
-              ),
-              suffixIcon: _searchController.text.isNotEmpty
-                  ? IconButton(
-                      icon: const Icon(Icons.close_rounded, size: 20),
-                      onPressed: () {
-                        _searchController.clear();
-                        setState(() => _hinos = []);
-                      },
-                    )
-                  : null,
-            ),
-          ),
-
-          if (!hideNumericPad) ...[
-            const SizedBox(height: 12),
-            // Display do Número Digitado
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  _numeroSelecionado.isEmpty ? "000" : _numeroSelecionado,
-                  style: TextStyle(
-                    fontSize: 33,
-                    fontWeight: FontWeight.bold,
-                    color: _numeroSelecionado.isEmpty
-                        ? Colors.black12
-                        : const Color(0xFF1B3A4B),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.backspace_outlined,
-                      color: Colors.redAccent),
-                  onPressed: _backspace,
-                ),
-              ],
-            ),
-            const Divider(height: 30),
-            // Teclado Numérico Estilizado
-            _buildNumericKeyboard(),
-            const SizedBox(height: 12),
-            TextButton(
-              onPressed: () {
-                carregarLista();
-              }, //
-              child: const Text("Ver todos os hinos",
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 8, 141, 212),
-                      fontWeight: FontWeight.bold)),
-            ),
+    return SafeArea(
+      top: false,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          boxShadow: [
+            BoxShadow(
+                color: Theme.of(context).shadowColor.withValues(alpha: 0.12),
+                blurRadius: 12)
           ],
-        ],
+        ),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Campo de Texto Moderno
+            TextField(
+              controller: _searchController,
+              onChanged: _buscaPorNome,
+              decoration: InputDecoration(
+                hintText: 'Pesquisa por título ou verso',
+                isDense: true,
+                contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                filled: true,
+                fillColor:
+                    Theme.of(context).colorScheme.surfaceContainerHighest,
+                prefixIcon: Icon(Icons.search,
+                    color: Theme.of(context).colorScheme.primary),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.close_rounded, size: 20),
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(() => _hinos = []);
+                        },
+                      )
+                    : null,
+              ),
+            ),
+
+            if (!hideNumericPad) ...[
+              const SizedBox(height: 6),
+              // Display do Número Digitado
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    _numeroSelecionado.isEmpty ? "000" : _numeroSelecionado,
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: _numeroSelecionado.isEmpty
+                          ? Theme.of(context).colorScheme.outlineVariant
+                          : Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton(
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(Icons.backspace_outlined,
+                        color: Colors.redAccent, size: 21),
+                    onPressed: _backspace,
+                  ),
+                ],
+              ),
+              const Divider(height: 14),
+              // Teclado Numérico Estilizado
+              _buildNumericKeyboard(),
+              TextButton(
+                style: TextButton.styleFrom(
+                  visualDensity: VisualDensity.compact,
+                  minimumSize: const Size(0, 36),
+                ),
+                onPressed: () {
+                  carregarLista();
+                }, //
+                child: Text("Todos os Hinos",
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }
@@ -248,7 +280,7 @@ class HomeNovaPageState extends State<HomeNovaPage> {
           ['0']
         ])
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2),
+            padding: const EdgeInsets.symmetric(vertical: 1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: row.map((val) => _buildKey(val)).toList(),
@@ -263,19 +295,19 @@ class HomeNovaPageState extends State<HomeNovaPage> {
       onTap: () => _selecionarNumero(label),
       borderRadius: BorderRadius.circular(50),
       child: Container(
-        height: 55,
+        height: 42,
         width: MediaQuery.of(context).size.width * 0.25,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 8, 141, 212),
-          borderRadius: BorderRadius.circular(14),
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(11),
         ),
         alignment: Alignment.center,
         child: Text(
           label,
-          style: const TextStyle(
-              fontSize: 21,
+          style: TextStyle(
+              fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 255, 255, 255)),
+              color: Theme.of(context).colorScheme.onPrimary),
         ),
       ),
     );

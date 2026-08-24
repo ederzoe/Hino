@@ -94,7 +94,7 @@ class HomePageState extends State<HomePage> {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Falando e Cantando Entre Vós'),
+        title: Text('HINOS'),
       ),
       body: Align(
         alignment: FractionalOffset.bottomCenter,

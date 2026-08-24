@@ -23,7 +23,8 @@ class DatabaseHelper {
     // Verifica versão do app
     final prefs = await SharedPreferences.getInstance();
     final savedVersion = prefs.getString('dbVersion');
-    final appVersion = (await PackageInfo.fromPlatform()).version;
+    final packageInfo = await PackageInfo.fromPlatform();
+    final appVersion = '${packageInfo.version}+${packageInfo.buildNumber}';
 
     final dbExists = await File(dbPath).exists();
 
@@ -53,9 +54,41 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>> searchByText(String valor) async {
     Database db = await instance.database;
     valor = normalizar(valor);
-    return await db.rawQuery(
-        "select Hino.Id, Verso.IdHino, Hino.Titulo, Verso.Coro, Verso.Ordem, Verso.Texto from Hino inner join Verso on Verso.IdHino = Hino.Id and Verso.Estrofe = 1 and Verso.Ordem = 1 where Hino.Id = ? or Hino.TituloNormalizado LIKE ? or Verso.TextoNormalizado LIKE ? ORDER BY Verso.Estrofe, Verso.Ordem LIMIT 12",
-        [valor, '%$valor%', '%$valor%']);
+    final ftsQuery = valor
+        .split(' ')
+        .where((termo) => termo.isNotEmpty)
+        .map((termo) => '$termo*')
+        .join(' ');
+
+    if (ftsQuery.isEmpty) return [];
+
+    return await db.rawQuery('''
+        SELECT Hino.Id,
+               Hino.Titulo,
+               COALESCE(
+                 (SELECT Verso.Texto
+                    FROM Verso
+                   WHERE Verso.IdHino = Hino.Id
+                     AND Verso.TextoNormalizado LIKE ?
+                   ORDER BY Verso.Estrofe, Verso.Ordem
+                   LIMIT 1),
+                 (SELECT Verso.Texto
+                    FROM Verso
+                   WHERE Verso.IdHino = Hino.Id
+                   ORDER BY Verso.Estrofe, Verso.Ordem
+                   LIMIT 1)
+               ) AS Texto
+          FROM Hino
+         WHERE Hino.rowid IN (
+                 SELECT rowid
+                   FROM HinoPesquisa
+                  WHERE HinoPesquisa MATCH ?
+               )
+            OR lower(Hino.Id) = ?
+         ORDER BY CASE WHEN lower(Hino.Id) = ? THEN 0 ELSE 1 END,
+                  Hino.Ordem
+         LIMIT 12
+        ''', ['%$valor%', ftsQuery, valor, valor]);
   }
 
   Future<List<Map<String, dynamic>>> searchByCategoria(String valor) async {

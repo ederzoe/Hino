@@ -1,7 +1,7 @@
 name: hinos
 description: "Falando e cantando entre vós."
 publish_to: 'none'
-version: 1.1.0+8
+version: 1.2.0+12
 
 environment:
   sdk: ^2.12.0
@@ -12,12 +12,14 @@ dependencies:
 
   sqflite: 2.4.2+1
   path:
-  path_provider: ^2.1.5
   collection: ^1.19.1
   shared_preferences: ^2.5.5
   package_info_plus: ^10.1.0
-  flutter_pdfview: 1.4.4
+  pdfrx: ^2.4.7
   diacritic: ^0.1.6
+  share_plus: ^13.3.0
+  url_launcher: ^6.3.2
+  font_awesome_flutter: ^10.12.0
 
 dev_dependencies:
   flutter_test:
@@ -27,6 +29,26 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: Gentium Plus
+      fonts:
+        - asset: assets/fonts/GentiumPlus.ttf
+    - family: OpenDyslexic
+      fonts:
+        - asset: assets/fonts/OpenDyslexic.otf
+    - family: Source Serif 4
+      fonts:
+        - asset: assets/fonts/SourceSerif4.ttf
+    - family: Roboto Serif
+      fonts:
+        - asset: assets/fonts/RobotoSerif.ttf
+    - family: Roboto Sans
+      fonts:
+        - asset: assets/fonts/RobotoSans.ttf
+    - family: Roboto Sans Mono
+      fonts:
+        - asset: assets/fonts/RobotoSansMono.ttf
 
   assets:    
     - assets/db/

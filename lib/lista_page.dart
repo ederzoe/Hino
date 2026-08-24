@@ -12,14 +12,12 @@ class ListaPage extends StatefulWidget {
 
 class _ListaPageState extends State<ListaPage> {
   final dbHelper = DatabaseHelper.instance;
-  String appBarTitle = 'Lista';
+  String appBarTitle = 'HINOS';
   bool isWidgetVisible = true;
   bool ehUltimoHino = false;
   String idHinoHinoAtual = '';
 
   double fonteTamanho = 24.0;
-  Color fonteCor = Colors.black;
-  Color fundoCor = Colors.white;
   List<Map<String, dynamic>> _hinos = [];
 
   final scrollController = ScrollController();
@@ -62,13 +60,12 @@ class _ListaPageState extends State<ListaPage> {
       appBar: AppBar(
         title: Text(appBarTitle),
       ),
-      backgroundColor: fundoCor,
       body: Align(
           alignment: FractionalOffset.bottomCenter,
           child: Column(
             children: [
               Card(
-                color: Colors.grey[200],
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
